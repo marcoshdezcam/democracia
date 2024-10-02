@@ -1,0 +1,9 @@
+services:
+  taskyDB:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: marcos
+      POSTGRES_PASSWORD: plt8n^$8p5YU&p

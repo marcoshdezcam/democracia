@@ -7,22 +7,17 @@ import {
   CardBody,
   Input,
   Image,
+  Button,
 } from "@nextui-org/react";
+import { EyeFilledIcon } from "./EyeFilledIcon.tsx";
+import { EyeSlashFilledIcon } from "./EyeSlashFilledIcon.tsx";
 import DefaultLayout from "@/layouts/default";
-
-/*
-TODO: 
-
-  ! => Email and Password form as required from Next UI
-  ! => When email has an invalid format, show email input field as Error with UI
-  ! => Setup YUP for form validation
-    ! => Validate Email
-    ! => Validate password has an entry
-*/
 
 export default function Login() {
   const [errorMessage, setErrorMessage] = React.useState(false);
-  const [isVisible, setIsVisible] = React.useState(false);
+
+  const [isPassVisible, setPassVisible] = React.useState(false);
+
   const inputStyle = {
     label: "text-black/50 dark:text-white/90",
     input: [
@@ -45,6 +40,8 @@ export default function Login() {
     ],
   };
 
+  const setPassVisibility = () => setPassVisible(!isPassVisible);
+
   return (
     <DefaultLayout>
       <Card className="max-w-[350px] mx-auto px-8 rounded-2xl flex justify-center items-center bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg">
@@ -63,7 +60,9 @@ export default function Login() {
         </CardHeader>
         <Divider />
         <CardBody>
-          {/* Email */}
+          {/* Email 
+          TODO: When email has an invalid format, show email input field as Error with UI
+          */}
           <div className="w-90 m-1 px-8 rounded-2xl flex justify-center items-center">
             <Input
               isRequired
@@ -74,17 +73,43 @@ export default function Login() {
               classNames={inputStyle}
             />
           </div>
+          {/* Password */}
           <div className="w-90 m-1 px-8 rounded-2xl flex justify-center items-center">
             <Input
               isRequired
-              type="password"
-              isClearable
+              placeholder="Pasword"
               radius="lg"
               classNames={inputStyle}
+              endContent={
+                <button
+                  className="focus:outline-none"
+                  type="button"
+                  onClick={setPassVisibility}
+                  aria-label="toggle password visibility"
+                >
+                  {isPassVisible ? (
+                    <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                  ) : (
+                    <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                  )}
+                </button>
+              }
+              type={isPassVisible ? "text" : "password"}
+              className="max-w-xs"
             />
+          </div>
+          {/* !TODO:  Add style and functionality */}
+          <div>
+            <Button color="primary" variant="flat">
+              Login
+            </Button>
+            <Button color="primary" variant="flat">
+              Register
+            </Button>
           </div>
         </CardBody>
         <Divider />
+
         <CardFooter></CardFooter>
       </Card>
     </DefaultLayout>

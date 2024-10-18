@@ -6,7 +6,7 @@
 
   <br/>
 
-  <h1><b>Task Manager</b></h1>
+  <h1><b>Democracia</b></h1>
 
 </div>
 
@@ -32,11 +32,11 @@
 
 <!-- PROJECT DESCRIPTION -->
 
-# 📖 Task Manager <a name="about-project"></a>
+# 📖 Democracia intends to inform every citizens about those who are in positions of responsability and with a history of govervent postitions. <a name="about-project"></a>
 
-> Tasky - Task Manager
+> Democracia - Assist citizens to make informed choices.
 
-**Tasky** is a simple task manager with Google Authentication and Redux to manage state changes. Making it simple and fast.
+**Democracia** open record about those who are and have occupied govervent positions.
 
 ## 🛠 Built With <a name="built-with"></a>
 

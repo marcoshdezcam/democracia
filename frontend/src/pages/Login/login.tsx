@@ -9,9 +9,26 @@ import {
   Image,
   Button,
 } from "@nextui-org/react";
+import {
+  useFormik,
+  withFormik,
+  FormikHelpers,
+  FormilProps,
+  FormikErrors,
+  Form,
+  Field,
+  Formik,
+} from "formik";
+import * as Yup from "yup";
+
 import { EyeFilledIcon } from "./EyeFilledIcon.tsx";
 import { EyeSlashFilledIcon } from "./EyeSlashFilledIcon.tsx";
 import DefaultLayout from "@/layouts/default";
+
+interface LoginFormValues {
+  email: string;
+  password: string;
+}
 
 export default function Login() {
   const [errorMessage, setErrorMessage] = React.useState(false);
@@ -42,6 +59,21 @@ export default function Login() {
 
   const setPassVisibility = () => setPassVisible(!isPassVisible);
 
+  // Validation error messages
+  const LoginSchema = Yup.object().shape({
+    email: Yup.string().email("Invalid email.").required("Required"),
+    password: Yup.string().required(),
+  });
+
+  const loginFormik = useFormik({
+    initialValues: {
+      email: "",
+    },
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+    },
+  });
+
   return (
     <DefaultLayout>
       <Card className="max-w-[350px] mx-auto px-8 rounded-2xl flex justify-center items-center bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg">
@@ -61,52 +93,73 @@ export default function Login() {
         <Divider />
         <CardBody>
           {/* Email 
-          TODO: When email has an invalid format, show email input field as Error with UI
+            TODO: Setup Yup validation
+            TODO: When email has an invalid format, show email input field as Error with UI
           */}
-          <div className="w-90 m-1 px-8 rounded-2xl flex justify-center items-center">
-            <Input
-              isRequired
-              type="email"
-              placeholder="Email"
-              isClearable
-              radius="lg"
-              classNames={inputStyle}
-            />
-          </div>
-          {/* Password */}
-          <div className="w-90 m-1 px-8 rounded-2xl flex justify-center items-center">
-            <Input
-              isRequired
-              placeholder="Pasword"
-              radius="lg"
-              classNames={inputStyle}
-              endContent={
-                <button
-                  className="focus:outline-none"
-                  type="button"
-                  onClick={setPassVisibility}
-                  aria-label="toggle password visibility"
-                >
-                  {isPassVisible ? (
-                    <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                  ) : (
-                    <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                  )}
-                </button>
-              }
-              type={isPassVisible ? "text" : "password"}
-              className="max-w-xs"
-            />
-          </div>
-          {/* !TODO:  Add style and functionality */}
-          <div>
-            <Button color="primary" variant="flat">
-              Login
-            </Button>
-            <Button color="primary" variant="flat">
-              Register
-            </Button>
-          </div>
+          <Formik
+            initialValues={{
+              email: "",
+              password: "",
+            }}
+            onSubmit={(
+              values: LoginFormValues,
+              { setSubmitting }: FormikHelpers<LoginFormValues>
+            ) => {
+              setTimeout(() => {
+                alert(JSON.stringify(values, null, 2));
+                setSubmitting(false);
+              }, 500);
+            }}
+          >
+            <Form>
+              <div className="w-90 m-1 px-8 rounded-2xl flex justify-center items-center">
+                <Input
+                  isRequired
+                  type="email"
+                  placeholder="Email"
+                  isClearable
+                  radius="lg"
+                  classNames={inputStyle}
+                />
+              </div>
+              {/* Password */}
+              <div className="w-90 m-1 px-8 rounded-2xl flex justify-center items-center">
+                <Input
+                  isRequired
+                  placeholder="Pasword"
+                  radius="lg"
+                  classNames={inputStyle}
+                  endContent={
+                    <button
+                      className="focus:outline-none"
+                      type="button"
+                      onClick={setPassVisibility}
+                      aria-label="toggle password visibility"
+                    >
+                      {isPassVisible ? (
+                        <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                      ) : (
+                        <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                      )}
+                    </button>
+                  }
+                  type={isPassVisible ? "text" : "password"}
+                  className="max-w-xs"
+                />
+              </div>
+              {/* Buttons
+            TODO:  Add style and functionality 
+          */}
+              <div>
+                <Button color="primary" variant="flat">
+                  Login
+                </Button>
+                <Button color="primary" variant="flat">
+                  Register
+                </Button>
+              </div>
+            </Form>
+          </Formik>
         </CardBody>
         <Divider />
 

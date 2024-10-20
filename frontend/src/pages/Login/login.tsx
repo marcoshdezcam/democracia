@@ -89,8 +89,11 @@ export const Login: React.FC<{}> = () => {
                     id="email"
                     type="email"
                     placeholder="Email"
-                    isClearable
                     radius="lg"
+                    isClearable
+                    onClear={() => {
+                      props.setFieldValue("email", "");
+                    }}
                     classNames={inputStyle}
                     onChange={props.handleChange}
                     onBlur={props.handleBlur}
@@ -98,9 +101,6 @@ export const Login: React.FC<{}> = () => {
                     name="email"
                   />
                 </div>
-                {props.errors.email && (
-                  <div id="feedback">{props.errors.email}</div>
-                )}
 
                 <div className="w-90 m-1 px-8 rounded-2xl flex justify-center items-center">
                   <Input

@@ -5,10 +5,10 @@ import {
   CardFooter,
   Divider,
   CardBody,
-  Input,
   Button,
   ButtonGroup,
 } from "@nextui-org/react";
+import { MyInput } from "../../components/myInput.tsx";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 
@@ -24,29 +24,6 @@ interface LoginValues {
 export const Login: React.FC<{}> = () => {
   const [isPassVisible, setPassVisible] = React.useState(false);
   const setPassVisibility = () => setPassVisible(!isPassVisible);
-
-  const inputStyle = {
-    label: "text-black/50 dark:text-white/90",
-    input: [
-      "bg-transparent",
-      "text-black/90 dark:text-white/90",
-      "placeholder:text-default-700/50 dark:placeholder:text-white/60",
-    ],
-    innerWrapper: "bg-transparent",
-    inputWrapper: [
-      "shadow-xl",
-      "bg-default-200/50",
-      "dark:bg-default/60",
-      "backdrop-blur-xl",
-      "backdrop-saturate-200",
-      "hover:bg-default-200/70",
-      "dark:hover:bg-default/70",
-      "group-data-[focus=true]:bg-default-200/50",
-      "dark:group-data-[focus=true]:bg-default/60",
-      "!cursor-text",
-    ],
-  };
-
   const validationSchema: Yup.ObjectSchema<LoginValues> = Yup.object().shape({
     email: Yup.string().email("Invalid email.").required("Required"),
     password: Yup.string().required("Pasword required"),
@@ -62,17 +39,17 @@ export const Login: React.FC<{}> = () => {
         <CardHeader className="flex gap-3 justify-center items-center">
           <div className="flex flex-col">
             <p className="text-md">Democracia</p>
-            <p className="text-small text-default-500">Democracia</p>
           </div>
         </CardHeader>
 
         <Divider />
 
         <CardBody>
-          {/* 
-            TODO: Setup Yup validation
-            TODO: When email has an invalid format, show email input field as Error with UI
-          */}
+          {
+            // TODO: Email error feedback
+            // TODO: Password error feedback
+            // TODO: Send REST request to API
+          }
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -84,7 +61,8 @@ export const Login: React.FC<{}> = () => {
             {(props) => (
               <Form onSubmit={props.handleSubmit}>
                 <div className="w-90 m-1 px-8 rounded-2xl flex justify-center items-center">
-                  <Input
+                  <MyInput
+                    color="transparent"
                     isRequired
                     id="email"
                     type="email"
@@ -94,7 +72,6 @@ export const Login: React.FC<{}> = () => {
                     onClear={() => {
                       props.setFieldValue("email", "");
                     }}
-                    classNames={inputStyle}
                     onChange={props.handleChange}
                     onBlur={props.handleBlur}
                     value={props.values.email}
@@ -103,12 +80,12 @@ export const Login: React.FC<{}> = () => {
                 </div>
 
                 <div className="w-90 m-1 px-8 rounded-2xl flex justify-center items-center">
-                  <Input
+                  <MyInput
+                    color="transparent"
                     isRequired
                     id="password"
                     placeholder="Pasword"
                     radius="lg"
-                    classNames={inputStyle}
                     onChange={props.handleChange}
                     onBlur={props.handleBlur}
                     value={props.values.password}
